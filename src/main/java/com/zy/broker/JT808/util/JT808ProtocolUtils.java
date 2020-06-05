@@ -83,7 +83,8 @@ public class JT808ProtocolUtils {
 	 * 发送消息时转义<br>
 	 * 
 	 * <pre>
-	 *  0x7e <====> 0x7d02
+	 *  0x7e ====> 0x7d02
+	 *  0x7d ====> 0x7d01
 	 * </pre>
 	 * 
 	 * @param bs
@@ -109,9 +110,12 @@ public class JT808ProtocolUtils {
 				if (bs[i] == 0x7e) {
 					baos.write(0x7d);
 					baos.write(0x02);
-				} else {
-					baos.write(bs[i]);
-				}
+				} else if (bs[i] == 0x7d){
+						baos.write(0x7d);
+						baos.write(0x01);
+					}else {
+						baos.write(bs[i]);
+					}
 			}
 			for (int i = end; i < bs.length; i++) {
 				baos.write(bs[i]);
